@@ -26,7 +26,7 @@ nav h1 {
   font-size: 1.25rem;
 }
 
-/* Buttons (works with your input type=button / submit / reset) */
+/* Buttons */
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {

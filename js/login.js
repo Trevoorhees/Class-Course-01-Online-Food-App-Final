@@ -1,14 +1,20 @@
 function checkInfo() {
-  const email = document.getElementById("emailId").value;
+  const email = document.getElementById("emailId").value.trim();
   const password = document.getElementById("password").value;
 
-  // logic
+  if (!email) {
+    alert("Please enter your email address.");
+    return false;
+  }
 
   if (password.length < 6) {
     alert("Password must be at least 6 characters long");
     return false;
-  } else {
-    localStorage.setItem("user", email); // email id set in local storage
-    return true;
   }
+
+  // We store the email in localStorage so dashboard.html can display it.
+  localStorage.setItem("user", email);
+
+  // Returning true allows the form to continue to dashboard.html
+  return true;
 }
