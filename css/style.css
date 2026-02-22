@@ -3,10 +3,18 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 16px;
-  background: #f5f7fb;
+  background: #7a87a0;
   color: #222;
 }
 
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h2 {
+  margin: 8px 0 12px;
+}
 /* Navbar */
 nav {
   display: flex;
@@ -14,7 +22,7 @@ nav {
   gap: 12px;
   align-items: center;
   justify-content: space-between;
-  background: #ffffff;
+  background: #149c86;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 12px 16px;
@@ -26,21 +34,27 @@ nav h1 {
   font-size: 1.25rem;
 }
 
+.nav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
 /* Buttons */
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
   padding: 8px 12px;
-  border: 1px solid #bbb;
+  border: 1px solid #a15151a1;
   border-radius: 8px;
-  background: #fff;
+  background: rgba(158, 100, 23, 0.767);
   cursor: pointer;
 }
 
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background: #f0f0f0;
+  background: green;
 }
 
 /* Login form */
@@ -53,6 +67,17 @@ form {
   padding: 20px;
 }
 
+form h1 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+form p {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: #555;
+}
+
 form input[type="email"],
 form input[type="password"] {
   width: 100%;
@@ -62,7 +87,6 @@ form input[type="password"] {
   border-radius: 8px;
   box-sizing: border-box;
 }
-
 /* Cart area */
 #cartSelection {
   background: #fff;
@@ -74,4 +98,460 @@ form input[type="password"] {
 
 #cartItem h3 {
   margin-bottom: 4px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #1f2937;
+}
+
+/* Full-screen background image */
+.login-bg {
+  min-height: 100vh;
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.45), rgba(10, 10, 10, 0.65)),
+    url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;        /* fits screen */
+  background-position: center;   /* keeps center visible */
+  background-repeat: no-repeat;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+/* Centered card */
+.login-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login-card {
+  width: min(460px, 100%);
+  background: rgba(255, 255, 255, 0.93);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+.brand-tag {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff7e6;
+  border: 1px solid #e8d4a8;
+  color: #7a5a21;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.login-card h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  color: #111827;
+}
+
+.subtitle {
+  margin: 0 0 8px;
+  color: #7a5a21;
+  font-weight: 700;
+}
+
+.description {
+  margin: 0 0 20px;
+  color: #4b5563;
+  line-height: 1.45;
+}
+
+/* Form */
+.login-form label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.96rem;
+}
+
+.login-form input[type="email"]:focus,
+.login-form input[type="password"]:focus {
+  outline: none;
+  border-color: #b98a2f;
+  box-shadow: 0 0 0 4px rgba(185, 138, 47, 0.14);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.login-form input[type="submit"],
+.login-form input[type="reset"] {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #cfcfcf;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#loginBtn {
+  background: #111827;
+  color: #fff;
+  border-color: #111827;
+  flex: 1;
+}
+
+#loginBtn:hover {
+  background: #1f2937;
+}
+
+.login-form input[type="reset"] {
+  background: #fffaf0;
+  border-color: #e6d6b5;
+  color: #6a5425;
+}
+
+.login-form input[type="reset"]:hover {
+  background: #f8efd9;
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  .login-card {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .login-card h1 {
+    font-size: 1.7rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
+.dashboard-bg {
+  min-height: 100vh;
+  margin: 0;
+  background-image:
+    linear-gradient(rgba(8, 8, 8, 0.50), rgba(8, 8, 8, 0.72)),
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=80");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+}
+
+.dashboard-shell {
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+
+/* Top bar */
+.dashboard-topbar {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.90);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+}
+
+.dashboard-brand h1 {
+  margin: 0 0 6px;
+  color: #111827;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+}
+
+.dashboard-subtitle {
+  margin: 0;
+  color: #5b6270;
+  line-height: 1.4;
+}
+
+.dashboard-meta {
+  display: grid;
+  gap: 10px;
+  align-content: center;
+}
+
+.meta-chip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fffaf0;
+  border: 1px solid #e6d6b5;
+  color: #2b2b2b;
+}
+
+.chip-label {
+  font-size: 0.78rem;
+  color: #7a5a21;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+#userEmail,
+#cartCount {
+  font-weight: 600;
+  color: #1f2937;
+  word-break: break-word;
+}
+
+/* Action buttons row */
+.dashboard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+}
+
+.dashboard-actions input[type="button"] {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #d3d3d3;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* Premium button accents */
+.dashboard-actions input[type="button"]:nth-child(1) {
+  background: #fff7e6;
+  border-color: #e8d4a8;
+  color: #6d5120;
+}
+
+.dashboard-actions input[type="button"]:nth-child(1):hover {
+  background: #f8efd9;
+}
+
+.dashboard-actions input[type="button"]:nth-child(2) {
+  background: #f8fafc;
+  border-color: #d8dee8;
+  color: #334155;
+}
+
+.dashboard-actions input[type="button"]:nth-child(2):hover {
+  background: #eef2f7;
+}
+
+.dashboard-actions input[type="button"]:nth-child(3) {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+}
+
+.dashboard-actions input[type="button"]:nth-child(3):hover {
+  background: #1f2937;
+}
+
+.dashboard-actions input[type="button"]:nth-child(4) {
+  background: #fff;
+  border-color: #e2c7c7;
+  color: #7f1d1d;
+}
+
+.dashboard-actions input[type="button"]:nth-child(4):hover {
+  background: #fff5f5;
+}
+
+/* Main content panel */
+.dashboard-content-panel {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+}
+
+.section-heading {
+  margin-bottom: 8px;
+}
+
+.section-heading h2 {
+  margin: 0 0 4px;
+  color: #111827;
+  font-size: 1.2rem;
+}
+
+.section-heading p {
+  margin: 0;
+  color: #667085;
+  font-size: 0.95rem;
+}
+
+/* Food grid area */
+#foodSelection {
+  margin-top: 12px;
+  align-items: start;
+}
+
+/* clarification note:
+   These styles enhance your JS-generated food cards even if they already use Tailwind classes.
+*/
+#foodSelection > div {
+  border: 1px solid #ede5d7;
+  border-radius: 14px;
+  background: #fffefb;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+#foodSelection > div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.10);
+}
+
+#foodSelection img {
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+#foodSelection h3 {
+  color: #1f2937;
+}
+
+#foodSelection p {
+  color: #5b6270;
+}
+
+/* If Tailwind is not applied, this helps buttons still look nice */
+#foodSelection input[type="button"] {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #111827;
+  background: #111827;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#foodSelection input[type="button"]:hover {
+  background: #1f2937;
+}
+
+/* Cart section */
+#cartSelection {
+  display: none; /* JS will show this when needed */
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #eadfcd;
+  background: #fffdf8;
+}
+
+.cart-heading {
+  margin-bottom: 10px;
+}
+
+#cartItem {
+  display: grid;
+  gap: 10px;
+}
+
+/* Matches your cleaned JS cart-row markup */
+.cart-row {
+  border: 1px solid #ece3d3;
+  border-radius: 12px;
+  padding: 12px;
+  background: #ffffff;
+}
+
+.cart-row h3 {
+  margin: 0 0 6px;
+  color: #1f2937;
+}
+
+.cart-row p {
+  margin: 3px 0;
+  color: #5b6270;
+}
+
+.cart-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cart-buttons input[type="button"] {
+  min-width: 42px;
+  padding: 8px 10px;
+  border-radius: 9px;
+  border: 1px solid #d8dee8;
+  background: #f8fafc;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cart-buttons input[type="button"]:hover {
+  background: #eef2f7;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard-topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-actions input[type="button"] {
+    flex: 1 1 140px;
+  }
+}
+
+@media (max-width: 560px) {
+  .dashboard-bg {
+    padding: 10px;
+  }
+
+  .dashboard-topbar,
+  .dashboard-content-panel {
+    border-radius: 14px;
+    padding: 12px;
+  }
+
+  .dashboard-actions {
+    padding: 10px;
+    border-radius: 14px;
+  }
 }

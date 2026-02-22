@@ -3,31 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard</title>
+    <title>Dashboard | My Food App</title>
     <link rel="stylesheet" href="css/style.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body>
-    <nav>
-      <h1>Welcome to My Food App</h1>
-      <span id="userEmail"></span>
-      <span id="cartCount"></span>
-      <div>
-        <input type="button" value="Food" onclick="showFoodSelection()" />
-        <input type="button" value="Cart" onclick="showCartSelection()" />
+  <body class="dashboard-bg">
+    <main class="dashboard-shell">
+      <!-- Top Bar -->
+      <header class="dashboard-topbar">
+        <div class="dashboard-brand">
+          <p class="brand-tag">My Food App</p>
+          <h1>Premium Dining Dashboard</h1>
+          <p class="dashboard-subtitle">
+            Browse curated meals, build your cart, and place your order.
+          </p>
+        </div>
+
+        <div class="dashboard-meta">
+          <div class="meta-chip">
+            <span class="chip-label">Signed in as</span>
+            <span id="userEmail">guest@example.com</span>
+          </div>
+
+          <div class="meta-chip">
+            <span class="chip-label">Cart</span>
+            <span id="cartCount">Cart Items: 0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Action Bar -->
+      <section class="dashboard-actions">
+        <input type="button" value="Food Menu" onclick="showFoodSelection()" />
+        <input type="button" value="View Cart" onclick="showCartSelection()" />
         <input type="button" value="Checkout" onclick="checkOut()" />
         <input type="button" value="Logout" onclick="logout()" />
-      </div>
-    </nav>
-    <h2>Food Selection</h2>
-    <section
-      id="foodSelection"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-10"
-    ></section>
-    <section id="cartSelection">
-      <h2>Cart Items</h2>
-      <div id="cartItem"></div>
-    </section>
+      </section>
+
+      <!-- Main Content Panel -->
+      <section class="dashboard-content-panel">
+        <div class="section-heading">
+          <h2>Menu Selection</h2>
+          <p>Choose from available dishes and add them to your cart.</p>
+        </div>
+
+        <section
+          id="foodSelection"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-2"
+        ></section>
+
+        <section id="cartSelection">
+          <div class="section-heading cart-heading">
+            <h2>Your Cart</h2>
+            <p>Review your selected meals and adjust quantities before checkout.</p>
+          </div>
+
+          <div id="cartItem"></div>
+        </section>
+      </section>
+    </main>
 
     <script src="js/dashboard.js"></script>
   </body>

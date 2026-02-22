@@ -15,6 +15,8 @@ function checkInfo() {
   // We store the email in localStorage so dashboard.html can display it.
   localStorage.setItem("user", email);
 
+  window.location.href = "dashboard.html";
+
   // Returning true allows the form to continue to dashboard.html
-  return true;
+  return false;
 }

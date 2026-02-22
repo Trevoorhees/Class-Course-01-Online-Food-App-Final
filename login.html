@@ -3,17 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Login | My Food App</title>
     <link rel="stylesheet" href="css/style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   </head>
-  <body>
-    <form action="dashboard.html" onsubmit="return checkInfo();" method="post">
-      <input type="email" placeholder="Enter your email" id="emailId" required /><br />
-      <input type="password" placeholder="Enter your password" id="password" required /><br />
-      <input type="submit" value="Login" id="loginBtn" />
-      <input type="reset" value="reset" />
-    </form>
+  <body class="login-bg">
+    <main class="login-wrapper">
+      <section class="login-card">
+        <p class="brand-tag">My Food App</p>
+
+        <h1>Welcome</h1>
+        <p class="subtitle">Log in to get your food now.</p>
+        <p class="description">Sign in to add food to your cart and checkout.</p>
+
+        <form action="dashboard.html" onsubmit="return checkInfo();" class="login-form" method="post">
+          <label for="emailId">Email Address</label>
+          <input type="email" id="emailId" placeholder="Enter your email" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required />
+
+          <div class="form-actions">
+            <input type="submit" value="Login" id="loginBtn" />
+            <input type="reset" value="Reset" />
+          </div>
+        </form>
+      </section>
+    </main>
 
     <script src="js/login.js"></script>
   </body>
