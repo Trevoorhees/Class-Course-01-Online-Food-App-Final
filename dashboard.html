@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <nav>
+      <h1>Welcome to My Food App</h1>
+      <span id="userEmail"></span>
+      <span id="cartCount"></span>
+      <div>
+        <input type="button" value="Food" onclick="showFoodSelection()" />
+        <input type="button" value="Cart" onclick="showCartSelection()" />
+        <input type="button" value="Checkout" onclick="checkOut()" />
+        <input type="button" value="Logout" onclick="logout()" />
+      </div>
+    </nav>
+    <h2>Food Selection</h2>
+    <section id="foodSelection" class="grid grid-cols-1 gap-6 p-10"></section>
+
+    <section id="cartSelection">
+      <h2>Cart Items</h2>
+      <div id="cartItem"></div>
+    </section>
+
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>
