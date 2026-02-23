@@ -1,7 +1,6 @@
 const user = localStorage.getItem("user");
 
 if (!user) {
-  // If no user is stored, send the user back to login page.
   window.location.href = "login.html";
 }
 
@@ -18,9 +17,9 @@ let cart = [];
 const FOOD_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=c";
 
 // Initial Page Setup
-showFoodSelection(); // Show food grid on page load.
-updateCartCount(); // Initialize "Cart Items: 0".
-loadFoodItems(); // Fetch and display food items.
+showFoodSelection(); 
+updateCartCount(); 
+loadFoodItems(); 
 
 // Navigation / View Functions
 function logout() {
@@ -48,7 +47,6 @@ function loadFoodItems() {
     .catch((error) => {
       console.error("Error loading food items:", error);
 
-      // fallback message
       foodSelection.innerHTML = `
         <p class="text-red-600 font-semibold">
           Unable to load food items right now. Please try again later.
@@ -99,7 +97,6 @@ function displayFood(meals) {
   foodSelection.innerHTML = foodMarkup;
 }
 
-// Cart Helpers
 function updateCartCount() {
   cartCountEl.textContent = `Cart Items: ${cart.length}`;
 }
@@ -175,7 +172,6 @@ function checkOut() {
 
   alert("Checkout successful! Thank you for your order.");
 
-  //Clear cart after successful checkout.
   cart = [];
   updateCartCount();
   updateCart();
