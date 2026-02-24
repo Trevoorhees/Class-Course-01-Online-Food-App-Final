@@ -20,6 +20,7 @@ const FOOD_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=c";
 showFoodSelection(); 
 updateCartCount(); 
 loadFoodItems(); 
+updateCart();
 
 // Navigation / View Functions
 function logout() {
@@ -35,6 +36,7 @@ function showFoodSelection() {
 function showCartSelection() {
   foodSelection.style.display = "none";
   cartSelection.style.display = "block";
+  updateCart();
 }
 
 // Data Fetch (AJAX / Fetch API)
@@ -120,12 +122,21 @@ function addToCart(mealId, mealName, price) {
   updateCart();
 }
 
+function getCartTotal() {
+  return cart.reduce((total, item) => {
+    return total + (item.price * item.quantity);
+  }, 0);
+}
+
 function updateCart() {
   const cartItem = document.getElementById("cartItem");
 
   if (cart.length === 0) {
     cartItem.innerHTML = `
       <p class="text-gray-600">Your cart is empty.</p>
+      <div class="cart-row cart-total-row">
+        <h3>Total Cost: $0.00</h3> 
+      </div>
     `;
     return;
   }
@@ -133,11 +144,14 @@ function updateCart() {
   let cartMarkup = "";
 
   cart.forEach((item) => {
+    const itemTotal = item.price * item.quantity;
+
     cartMarkup += `
       <div class="cart-row">
         <h3>${item.mealName}</h3>
         <p>Price: $${item.price}</p>
         <p>Quantity: ${item.quantity}</p>
+        <p><strong>Item Total: $${itemTotal.toFixed(2)}</strong></p>
 
         <div class="cart-buttons">
           <input type="button" value="+" onclick="changeQuantity(${item.mealId}, 1)" />
@@ -146,6 +160,14 @@ function updateCart() {
       </div>
     `;
   });
+
+  const cartTotal = getCartTotal(); 
+
+  cartMarkup += `
+    <div class="cart-row cart-total-row">
+      <h3>Total Cost: $${cartTotal.toFixed(2)}</h3> 
+    </div>
+  `;
 
   cartItem.innerHTML = cartMarkup;
 }
