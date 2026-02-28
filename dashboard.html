@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard | My Food App</title>
     <link rel="stylesheet" href="css/style.css" />
-
+    <!-- Loads the CSS file -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Loads Tailwind CSS -->
   </head>
+
   <body class="dashboard-bg">
     <main class="dashboard-shell">
-      <!-- Top Bar -->
       <header class="dashboard-topbar">
         <div class="dashboard-brand">
           <p class="brand-tag">My Food App</p>
           <h1>Dashboard</h1>
-          <p class="dashboard-subtitle">
-            Browse meals, build your cart, and place your order.
-          </p>
+          <p class="dashboard-subtitle">Browse meals, build your cart, and place your order.</p>
         </div>
 
         <div class="dashboard-meta">
           <div class="meta-chip">
             <span class="chip-label">Signed in as</span>
             <span id="userEmail">guest@example.com</span>
+            <!-- JS replaces this with the real email from localStorage -->
           </div>
 
           <div class="meta-chip">
@@ -33,15 +33,20 @@
         </div>
       </header>
 
-      <!-- Action Bar -->
       <section class="dashboard-actions">
         <input type="button" value="Food Menu" onclick="showFoodSelection()" />
+        <!-- Shows the menu grid -->
+
         <input type="button" value="View Cart" onclick="showCartSelection()" />
+        <!-- Shows the cart area -->
+
         <input type="button" value="Checkout" onclick="checkOut()" />
+        <!-- Attempts checkout (validates cart not empty) -->
+
         <input type="button" value="Logout" onclick="logout()" />
+        <!-- Clears localStorage user and returns to login -->
       </section>
 
-      <!-- Main Content Panel -->
       <section class="dashboard-content-panel">
         <div class="section-heading">
           <h2>Menu Selection</h2>
@@ -55,6 +60,7 @@
 
         <section id="cartSelection">
           <div class="section-heading cart-heading">
+            <!-- Shown when "View Cart" is clicked -->
             <h2>Your Cart</h2>
             <p>Review your selected meals and adjust quantities before checkout.</p>
           </div>
@@ -65,5 +71,6 @@
     </main>
 
     <script src="js/dashboard.js"></script>
+    <!-- Loads all dashboard code -->
   </body>
 </html>

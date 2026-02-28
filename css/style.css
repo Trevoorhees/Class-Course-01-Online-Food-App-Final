@@ -1,340 +1,269 @@
-
 * {
-  box-sizing: border-box; 
+  box-sizing: border-box; /* padding and border are included inside width and height */
 }
 
 /* Base page styling */
 body {
-  font-family:
-    Arial, sans-serif; 
-  margin: 0; 
-  padding: 16px;
-  background: #7a87a0;
-  color: #1f2937;
+  font-family: Arial, sans-serif; /* Default font */
+  margin: 0; /* Removes default browser margin */
+  padding: 16px; /* Adds page padding */
+  background: #7a87a0; /* Default background color */
+  color: #1f2937; /* Default text color */
 }
 
 main {
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 1400px; /* Prevents content from being too wide */
+  margin: 0 auto; /* Centers horizontally */
 }
 
 h2 {
-  margin: 8px 0 12px;
+  margin: 8px 0 12px; /* Spacing above and below section headings */
 }
 
-/* Navbar */
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  background: #149c86;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-}
-
-nav h1 {
-  margin: 0;
-  font-size: 1.25rem;
-}
-
-.nav-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-/* Buttons */
+/* Buttons (general) */
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  padding: 8px 12px;
-  border: 1px solid #a15151a1;
-  border-radius: 8px;
-  background: rgba(158, 100, 23, 0.767);
-  cursor: pointer;
+  padding: 8px 12px; /* Button spacing */
+  border: 1px solid #a15151a1; /* Border color */
+  border-radius: 8px; /* Rounded corners */
+  background: rgba(158, 100, 23, 0.767); /* Default background */
+  cursor: pointer; /* Hand cursor on hover */
 }
 
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover {
-  background: green;
+  background: green; /* Hover state (overridden later) */
 }
 
-/* Login */
-form:not(.login-form) {
-  max-width: 380px; 
-  margin: 60px auto; 
-  background: #fff; 
-  border: 1px solid #ddd; 
-  border-radius: 12px; 
-  padding: 20px; 
-}
-
-form:not(.login-form) h1 {
-  margin-top: 0; 
-  margin-bottom: 8px;
-}
-
-form:not(.login-form) p {
-  margin-top: 0; 
-  margin-bottom: 16px;
-  color: #555;
-}
-
-form:not(.login-form) input[type="email"],
-form:not(.login-form) input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-sizing: border-box;
-}
-
-/* Full-screen background image */
+/* Login page background */
 .login-bg {
-  min-height: 100vh;
+  min-height: 100vh; /* Full viewport height */
   background-image:
     linear-gradient(rgba(10, 10, 10, 0.45), rgba(10, 10, 10, 0.65)),
-    url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: grid;
-  place-items: center;
-  padding: 20px;
+    /* Dark overlay */
+    url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80"); /* Background photo */
+  background-size: cover; /* Image covers the screen */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* No tiling */
+  display: grid; /* Grid used for easy centering */
+  place-items: center; /* Center content both ways */
+  padding: 20px; /* Padding so card doesnt touch edges */
 }
 
 .login-wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+  width: 100%; /* Full width */
+  display: flex; /* Allows centering child */
+  justify-content: center; /* Center horizontally */
 }
 
 .login-card {
-  width: min(460px, 100%);
-  background: rgba(255, 255, 255, 0.93);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  width: min(460px, 100%); /* Responsive max width */
+  background: rgba(255, 255, 255, 0.93); /* Slight transparency */
+  backdrop-filter: blur(6px); /* Blurs background behind card */
+  border: 1px solid rgba(255, 255, 255, 0.45); /* Soft border */
+  border-radius: 18px; /* Rounded corners */
+  padding: 28px; /* Inner spacing */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22); /* Depth shadow */
 }
 
 .brand-tag {
-  display: inline-block;
-  margin: 0 0 12px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: #fff7e6;
-  border: 1px solid #e8d4a8;
-  color: #7a5a21;
-  font-size: 0.85rem;
-  font-weight: 700;
+  display: inline-block; /* So padding and border apply nicely */
+  margin: 0 0 12px; /* Space below tag */
+  padding: 6px 12px; /* Pill spacing */
+  border-radius: 999px; /* Fully rounded pill */
+  background: #fff7e6; /* Warm background */
+  border: 1px solid #e8d4a8; /* Warm border */
+  color: #7a5a21; /* Warm text */
+  font-size: 0.85rem; /* Smaller text */
+  font-weight: 700; /* Bold */
 }
 
 .login-card h1 {
-  margin: 0 0 8px;
-  font-size: 2rem;
-  color: #111827;
+  margin: 0 0 8px; /* Space below */
+  font-size: 2rem; /* Large heading */
+  color: #111827; /* Dark text */
 }
 
 .subtitle {
-  margin: 0 0 8px;
-  color: #7a5a21;
-  font-weight: 700;
+  margin: 0 0 8px; /* Space below */
+  color: #7a5a21; /* Warm accent text */
+  font-weight: 700; /* Bold */
 }
 
 .description {
-  margin: 0 0 20px;
-  color: #4b5563;
-  line-height: 1.45;
+  margin: 0 0 20px; /* Space below */
+  color: #4b5563; /* Muted text */
+  line-height: 1.45; /* Readable spacing */
 }
 
-/* Form */
+/* Login form styling */
 .login-form label {
-  display: block;
-  margin: 0 0 6px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  color: #374151;
+  display: block; /* Each label on its own line */
+  margin: 0 0 6px; /* Space below label */
+  font-size: 0.92rem; /* Slightly smaller */
+  font-weight: 600; /* Semi-bold */
+  color: #374151; /* Dark gray */
 }
 
 .login-form input[type="email"],
 .login-form input[type="password"] {
-  width: 100%;
-  padding: 12px 14px;
-  margin-bottom: 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #fff;
-  font-size: 0.96rem;
+  width: 100%; /* Full width fields */
+  padding: 12px 14px; /* Field padding */
+  margin-bottom: 14px; /* Space between fields */
+  border: 1px solid #d1d5db; /* Border */
+  border-radius: 10px; /* Rounded corners */
+  background: #fff; /* White background */
+  font-size: 0.96rem; /* Field text size */
 }
 
 .login-form input[type="email"]:focus,
 .login-form input[type="password"]:focus {
-  outline: none;
-  border-color: #b98a2f;
-  box-shadow: 0 0 0 4px rgba(185, 138, 47, 0.14);
+  outline: none; /* Remove default focus outline */
+  border-color: #b98a2f; /* Focus border color */
+  box-shadow: 0 0 0 4px rgba(185, 138, 47, 0.14); /* Focus glow ring */
 }
 
 .form-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 4px;
+  display: flex; /* Row layout for buttons */
+  gap: 10px; /* Space between buttons */
+  margin-top: 4px; /* Slight spacing above */
 }
 
 .login-form input[type="submit"],
 .login-form input[type="reset"] {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid #cfcfcf;
-  cursor: pointer;
-  font-weight: 600;
+  padding: 10px 14px; /* Button padding */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid #cfcfcf; /* Border */
+  cursor: pointer; /* Hand cursor */
+  font-weight: 600; /* Semi-bold */
 }
 
+/* Special styling for the login submit button */
 #loginBtn {
-  background: #111827;
-  color: #fff;
-  border-color: #111827;
-  flex: 1;
+  background: #111827; /* Dark background */
+  color: #fff; /* White text */
+  border-color: #111827; /* Matching border */
+  flex: 1; /* Makes login button take more space */
 }
 
 #loginBtn:hover {
-  background: #1f2937;
+  background: #1f2937; /* Slightly lighter on hover */
 }
 
+/* Reset button styling */
 .login-form input[type="reset"] {
-  background: #fffaf0;
-  border-color: #e6d6b5;
-  color: #6a5425;
+  background: #fffaf0; /* Light warm background */
+  border-color: #e6d6b5; /* Warm border */
+  color: #6a5425; /* Warm text */
 }
 
 .login-form input[type="reset"]:hover {
-  background: #f8efd9;
+  background: #f8efd9; /* Hover background */
 }
 
-/* Login Mobile */
-@media (max-width: 520px) {
-  .login-card {
-    padding: 20px;
-    border-radius: 14px;
-  }
-
-  .login-card h1 {
-    font-size: 1.7rem;
-  }
-
-  .form-actions {
-    flex-direction: column;
-  }
-}
-
-/* Dashboard */
+/* Dashboard background */
 .dashboard-bg {
-  min-height: 100vh;
-  margin: 0;
+  min-height: 100vh; /* Full height */
+  margin: 0; /* Remove margin */
   background-image:
     linear-gradient(rgba(8, 8, 8, 0.5), rgba(8, 8, 8, 0.72)),
-    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=80");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  padding: 20px;
+    /* Dark overlay */
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=80"); /* Background photo */
+  background-size: cover; /* Cover screen */
+  background-position: center; /* Center image */
+  background-repeat: no-repeat; /* No tiling */
+  padding: 20px; /* Spacing around content */
 }
 
 .dashboard-shell {
-  width: min(1400px, 100%);
-  margin: 0 auto;
-  display: grid;
-  gap: 14px;
+  width: min(1400px, 100%); /* Responsive width */
+  margin: 0 auto; /* Center */
+  display: grid; /* Grid layout */
+  gap: 14px; /* Space between sections */
 }
 
 /* Top bar */
 .dashboard-topbar {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 14px;
-  padding: 18px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+  display: grid; /* Two-column layout */
+  grid-template-columns: 1.2fr 1fr; /* Left wider than right */
+  gap: 14px; /* Space between columns */
+  padding: 18px; /* Padding */
+  border-radius: 18px; /* Rounded corners */
+  background: rgba(255, 255, 255, 0.9); /* Light translucent */
+  border: 1px solid rgba(255, 255, 255, 0.42); /* Soft border */
+  backdrop-filter: blur(8px); /* Blur behind panel */
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18); /* Shadow */
 }
 
 .dashboard-brand h1 {
-  margin: 0 0 6px;
-  color: #111827;
-  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  margin: 0 0 6px; /* Space below */
+  color: #111827; /* Dark heading */
+  font-size: clamp(1.35rem, 2vw, 1.8rem); /* Responsive heading size */
 }
 
 .dashboard-subtitle {
-  margin: 0;
-  color: #5b6270;
-  line-height: 1.4;
+  margin: 0; /* Remove default margin */
+  color: #5b6270; /* Muted text */
+  line-height: 1.4; /* Readable spacing */
 }
 
 .dashboard-meta {
-  display: grid;
-  gap: 10px;
-  align-content: center;
+  display: grid; /* Stack chips */
+  gap: 10px; /* Space between chips */
+  align-content: center; /* Center chips vertically */
 }
 
 .meta-chip {
-  display: flex;
+  display: flex; /* Column layout for label and value */
   flex-direction: column;
-  gap: 2px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  background: #fffaf0;
-  border: 1px solid #e6d6b5;
-  color: #2b2b2b;
+  gap: 2px; /* Small gap */
+  padding: 10px 12px; /* Inner spacing */
+  border-radius: 12px; /* Rounded corners */
+  background: #fffaf0; /* Warm background */
+  border: 1px solid #e6d6b5; /* Warm border */
+  color: #2b2b2b; /* Text color */
 }
 
 .chip-label {
-  font-size: 0.78rem;
-  color: #7a5a21;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  font-size: 0.78rem; /* Smaller label */
+  color: #7a5a21; /* Warm accent */
+  font-weight: 700; /* Bold */
+  text-transform: uppercase; /* Uppercase label */
+  letter-spacing: 0.04em; /* Spacing between letters */
 }
 
 #userEmail,
 #cartCount {
-  font-weight: 600;
-  color: #1f2937;
-  word-break: break-word;
+  font-weight: 600; /* Bold values */
+  color: #1f2937; /* Dark gray */
+  word-break: break-word; /* Prevent overflow on long emails */
 }
 
 /* Action buttons row */
 .dashboard-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14);
+  display: flex; /* Row of buttons */
+  flex-wrap: wrap; /* Wrap to new line on small screens */
+  gap: 10px; /* Space between buttons */
+  padding: 12px; /* Padding */
+  border-radius: 16px; /* Rounded corners */
+  background: rgba(255, 255, 255, 0.88); /* Light translucent */
+  border: 1px solid rgba(255, 255, 255, 0.42); /* Soft border */
+  backdrop-filter: blur(8px); /* Blur behind panel */
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14); /* Shadow */
 }
 
 .dashboard-actions input[type="button"] {
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: 1px solid #d3d3d3;
-  background: #fff;
-  cursor: pointer;
-  font-weight: 600;
+  padding: 10px 14px; /* Button padding */
+  border-radius: 10px; /* Rounded */
+  border: 1px solid #d3d3d3; /* Border */
+  background: #fff; /* Default background */
+  cursor: pointer; /* Hand cursor */
+  font-weight: 600; /* Semi-bold */
 }
 
-/* Button accents */
+/* Button accents (Had ChatGPT help with getting these button colors to work right) */
 .dashboard-actions input[type="button"]:nth-child(1) {
   background: #fff7e6;
   border-color: #e8d4a8;
@@ -377,168 +306,136 @@ form:not(.login-form) input[type="password"] {
 
 /* Main content panel */
 .dashboard-content-panel {
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.42);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+  padding: 16px; /* Inner spacing */
+  border-radius: 18px; /* Rounded corners */
+  background: rgba(255, 255, 255, 0.92); /* Light translucent */
+  border: 1px solid rgba(255, 255, 255, 0.42); /* Soft border */
+  backdrop-filter: blur(8px); /* Blur behind panel */
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18); /* Shadow */
 }
 
 .section-heading {
-  margin-bottom: 8px;
+  margin-bottom: 8px; /* Space under heading */
 }
 
 .section-heading h2 {
-  margin: 0 0 4px;
-  color: #111827;
-  font-size: 1.2rem;
+  margin: 0 0 4px; /* Space below heading */
+  color: #111827; /* Dark heading */
+  font-size: 1.2rem; /* Size */
 }
 
 .section-heading p {
-  margin: 0;
-  color: #667085;
-  font-size: 0.95rem;
+  margin: 0; /* Remove default margin */
+  color: #667085; /* Muted text */
+  font-size: 0.95rem; /* Slightly smaller */
 }
 
 /* Food grid area */
 #foodSelection {
-  margin-top: 12px;
-  align-items: start;
+  margin-top: 12px; /* Space above menu grid */
+  align-items: start; /* Align items at top */
 }
 
 #foodSelection > div {
-  border: 1px solid #ede5d7;
-  border-radius: 14px;
-  background: #fffefb;
-  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+  border: 1px solid #ede5d7; /* Card border */
+  border-radius: 14px; /* Rounded cards */
+  background: #fffefb; /* Slight warm white */
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05); /* Soft shadow */
   transition:
     transform 0.15s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease; /* Smooth hover transitions */
 }
 
 #foodSelection > div:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px); /* Lift effect */
+  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.1); /* Deeper shadow */
 }
 
 #foodSelection img {
-  border-radius: 10px;
-  object-fit: cover;
+  border-radius: 10px; /* Rounded images */
+  object-fit: cover; /* Crop instead of stretching */
 }
 
 #foodSelection h3 {
-  color: #1f2937;
+  color: #1f2937; /* Text color */
 }
 
 #foodSelection p {
-  color: #5b6270;
+  color: #5b6270; /* Muted text */
 }
 
 #foodSelection input[type="button"] {
-  width: 100%;
-  margin-top: 8px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid #111827;
-  background: #111827;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
+  width: 100%; /* Button spans full card width */
+  margin-top: 8px; /* Space above button */
+  padding: 10px 12px; /* Padding */
+  border-radius: 10px; /* Rounded */
+  border: 1px solid #111827; /* Dark border */
+  background: #111827; /* Dark background */
+  color: #fff; /* White text */
+  font-weight: 600; /* Semi-bold */
+  cursor: pointer; /* Hand cursor */
 }
 
 #foodSelection input[type="button"]:hover {
-  background: #1f2937;
+  background: #1f2937; /* Hover background */
 }
 
 /* Cart section */
 #cartSelection {
-  display: none; 
-  margin-top: 14px; 
-  padding: 14px; 
-  border-radius: 14px; 
-  border: 1px solid #eadfcd; 
-  background: #fffdf8; 
+  display: none; /* Hidden until "View Cart" is clicked */
+  margin-top: 14px; /* Space above cart */
+  padding: 14px; /* Inner spacing */
+  border-radius: 14px; /* Rounded */
+  border: 1px solid #eadfcd; /* Border */
+  background: #fffdf8; /* Warm background */
 }
 
 #cartItem h3 {
-  margin-bottom: 4px; 
+  margin-bottom: 4px; /* Spacing */
 }
 
 .cart-heading {
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Spacing */
 }
 
 #cartItem {
-  display: grid;
-  gap: 10px;
+  display: grid; /* Stack cart rows */
+  gap: 10px; /* Space between rows */
 }
 
 .cart-row {
-  border: 1px solid #ece3d3;
-  border-radius: 12px;
-  padding: 12px;
-  background: #ffffff;
+  border: 1px solid #ece3d3; /* Border */
+  border-radius: 12px; /* Rounded */
+  padding: 12px; /* Inner spacing */
+  background: #ffffff; /* White */
 }
 
 .cart-row h3 {
-  margin: 0 0 6px;
-  color: #1f2937;
+  margin: 0 0 6px; /* Space under item name */
+  color: #1f2937; /* Dark text */
 }
 
 .cart-row p {
-  margin: 3px 0;
-  color: #5b6270;
+  margin: 3px 0; /* Small spacing */
+  color: #5b6270; /* Muted text */
 }
 
 .cart-buttons {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
+  display: flex; /* Row layout for + and - */
+  gap: 8px; /* Space between buttons */
+  margin-top: 8px; /* Space above */
 }
 
 .cart-buttons input[type="button"] {
-  min-width: 42px;
-  padding: 8px 10px;
-  border-radius: 9px;
-  border: 1px solid #d8dee8;
-  background: #f8fafc;
-  cursor: pointer;
-  font-weight: 700;
+  min-width: 42px; /* Minimum size */
+  padding: 8px 10px; /* Padding */
+  border-radius: 9px; /* Rounded */
+  border: 1px solid #d8dee8; /* Border */
+  background: #f8fafc; /* Light background */
+  cursor: pointer; /* Hand cursor */
+  font-weight: 700; /* Bold */
 }
 
 .cart-buttons input[type="button"]:hover {
-  background: #eef2f7;
-}
-
-/* Dashboard Responsive */
-@media (max-width: 900px) {
-  .dashboard-topbar {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-meta {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-actions input[type="button"] {
-    flex: 1 1 140px;
-  }
-}
-
-@media (max-width: 560px) {
-  .dashboard-bg {
-    padding: 10px;
-  }
-
-  .dashboard-topbar,
-  .dashboard-content-panel {
-    border-radius: 14px;
-    padding: 12px;
-  }
-
-  .dashboard-actions {
-    padding: 10px;
-    border-radius: 14px;
-  }
+  background: #eef2f7; /* Hover background */
 }
