@@ -1,0 +1,821 @@
+Below is all of my code, the order of code will be listed as;
+HTML
+JS
+CSS
+
+
+
+----------LOGIN.HTML----------
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Loads the CSS file -->
+  </head>
+
+  <body class="login-bg">
+    <main class="login-wrapper">
+      <section class="login-card">
+        <p class="brand-tag">My Food App</p>
+
+        <h1>Welcome!</h1>
+
+        <p class="subtitle">Log in to get your food now.</p>
+
+        <p class="description">Sign in to add food to your cart and checkout.</p>
+
+        <form
+          action="dashboard.html"
+          onsubmit="return checkInfo();"
+          class="login-form"
+          method="post"
+        >
+          <label for="emailId">Email Address</label>
+          <input type="email" id="emailId" placeholder="Enter your email" required />
+
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required />
+
+          <div class="form-actions">
+            <input type="submit" value="Login" id="loginBtn" />
+            <input type="reset" value="Reset" />
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="js/login.js"></script>
+    <!-- Loads the login validation and redirect code -->
+  </body>
+</html>
+----------LOGIN.HTML----------
+
+----------DASHBOARD.HTML----------
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | My Food App</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Loads the CSS file -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Loads Tailwind CSS -->
+  </head>
+
+  <body class="dashboard-bg">
+    <main class="dashboard-shell">
+      <header class="dashboard-topbar">
+        <div class="dashboard-brand">
+          <p class="brand-tag">My Food App</p>
+          <h1>Dashboard</h1>
+          <p class="dashboard-subtitle">Browse meals, build your cart, and place your order.</p>
+        </div>
+
+        <div class="dashboard-meta">
+          <div class="meta-chip">
+            <span class="chip-label">Signed in as</span>
+            <span id="userEmail">guest@example.com</span>
+            <!-- JS replaces this with the real email from localStorage -->
+          </div>
+
+          <div class="meta-chip">
+            <span class="chip-label">Cart</span>
+            <span id="cartCount">Cart Items: 0</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="dashboard-actions">
+        <input type="button" value="Food Menu" onclick="showFoodSelection()" />
+        <!-- Shows the menu grid -->
+
+        <input type="button" value="View Cart" onclick="showCartSelection()" />
+        <!-- Shows the cart area -->
+
+        <input type="button" value="Checkout" onclick="checkOut()" />
+        <!-- Attempts checkout (validates cart not empty) -->
+
+        <input type="button" value="Logout" onclick="logout()" />
+        <!-- Clears localStorage user and returns to login -->
+      </section>
+
+      <section class="dashboard-content-panel">
+        <div class="section-heading">
+          <h2>Menu Selection</h2>
+          <p>Choose from available dishes and add them to your cart.</p>
+        </div>
+
+        <section
+          id="foodSelection"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-2"
+        ></section>
+
+        <section id="cartSelection">
+          <div class="section-heading cart-heading">
+            <!-- Shown when "View Cart" is clicked -->
+            <h2>Your Cart</h2>
+            <p>Review your selected meals and adjust quantities before checkout.</p>
+          </div>
+
+          <div id="cartItem"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+    <!-- Loads all dashboard code -->
+  </body>
+</html>
+----------DASHBOARD.HTML----------
+
+----------LOGIN.JS----------
+function checkInfo() {
+  const email = document.getElementById("emailId").value.trim(); // Grab the email input value and remove extra spaces at the start and end
+  const password = document.getElementById("password").value; // Grab the password input value
+
+  if (!email) {
+    alert("Please enter your email address."); // If email is empty after trimming, show an alert and stop submission
+    return false; // Returning false prevents the form from submitting
+  }
+
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters long");
+    return false; // If password is too short, show an alert and stop submission
+  }
+
+  localStorage.setItem("user", email); // Save the email in localStorage so dashboard.html can read it later
+
+  window.location.href = "dashboard.html"; // Manually navigate to the dashboard page
+
+  return false; 
+}
+----------LOGIN.JS----------
+
+----------DASHBOARD.JS----------
+const user = localStorage.getItem("user"); // Read the "user" value that login.js stored in localStorage
+
+if (!user) {
+  window.location.href = "login.html"; // If no user exists, redirect back to the login page
+}
+
+// DOM References - grab elements from dashboard.html
+const userEmailEl = document.getElementById("userEmail"); // Element that displays the signed-in email
+
+const cartCountEl = document.getElementById("cartCount"); // Element that displays the cart item count
+
+const foodSelection = document.getElementById("foodSelection"); // Section where food cards will be rendered
+
+const cartSelection = document.getElementById("cartSelection"); // Section where cart content will be shown
+
+userEmailEl.textContent = user; // Put the logged-in email into the dashboard
+
+// UI State
+let cart = []; // Cart is stored in memory as an array of items.
+
+const FOOD_URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=c"; // URL for the food data
+
+// Initial Page Setup
+showFoodSelection(); // Show menu area and hide cart area by default
+
+updateCartCount(); // Update the cart count display (starts at 0)
+
+loadFoodItems(); // Fetch food items from the API and render them on the page
+
+updateCart(); // Render the cart section (shows empty cart message initially)
+
+// Navigation and View Functions
+function logout() {
+  localStorage.removeItem("user"); // Remove the stored user from localStorage
+  window.location.href = "login.html"; // Redirect back to login page
+}
+
+function showFoodSelection() {
+  foodSelection.style.display = "grid"; // Make the menu grid visible
+  cartSelection.style.display = "none"; // Hide the cart section
+}
+
+function showCartSelection() {
+  foodSelection.style.display = "none"; // Hide the menu grid
+  cartSelection.style.display = "block"; // Show the cart section
+  updateCart(); // Re-render cart UI so it is up-to-date
+}
+
+// Data Fetch
+function loadFoodItems() {
+  fetch(FOOD_URL) // Request data from the food data URL
+    .then((response) => response.json()) // Convert HTTP response into JSON
+    .then((data) => {
+      displayFood(data?.meals || []); // data.meals is an array but fallback to [] if null
+    })
+    .catch((error) => {
+      console.error("Error loading food items:", error); // Log the error to the console for debugging
+
+      // Show an error message in the UI
+      foodSelection.innerHTML = `
+        <p class="text-red-600 font-semibold">
+          Unable to load food items right now. Please try again later. 
+        </p>
+      `;
+    });
+}
+
+// Food Display
+function displayFood(meals) {
+  // If meals isnt an array or its empty, show a message and stop
+  if (!Array.isArray(meals) || meals.length === 0) {
+    foodSelection.innerHTML = `
+      <p class="text-gray-700 font-semibold">
+        No food items available right now.
+      </p>
+    `;
+    return;
+  }
+
+  let foodMarkup = ""; // Make it an HTML
+
+  meals.forEach((meal) => {
+    const price = Math.floor(Math.random() * 100) + 50; // Create a random number between 50 and 149
+
+    const safeMealName = JSON.stringify(meal.strMeal); // Make meal name easy to embed
+
+    // Append a food "card" to the markup string
+    foodMarkup += `
+      <div class="bg-white p-4 rounded-lg shadow-md">
+        <img
+          src="${meal.strMealThumb}"
+          alt="${meal.strMeal}"
+          width="200"
+          height="200"
+          class="h-20 w-full object-cover rounded-lg"
+        />
+        <h3 class="text-lg font-semibold">${meal.strMeal}</h3>
+        <p class="text-gray-800 text-sm">Price: $${price}</p>
+
+        <input
+          type="button"
+          value="Add To Cart"
+          onclick='addToCart(${meal.idMeal}, ${safeMealName}, ${price})'
+          class="bg-blue-500 text-white py-2 px-3 rounded-md hover:bg-blue-600 transition-colors duration-300 cursor-pointer"
+        />
+      </div>
+    `;
+  });
+
+  foodSelection.innerHTML = foodMarkup; // Inject the HTML into the menu section
+}
+
+function updateCartCount() {
+  cartCountEl.textContent = `Cart Items: ${cart.length}`; // Show number of items in cart. Item types only, not item quantity.
+}
+
+// Cart Actions
+function addToCart(mealId, mealName, price) {
+  const existingItem = cart.find((item) => item.mealId === mealId); // Look for the same meal already in cart
+
+  if (existingItem) {
+    existingItem.quantity += 1; // If found, increase quantity
+  } else {
+    // If not found, add a new cart object
+    cart.push({
+      mealId,
+      mealName,
+      price,
+      quantity: 1,
+    });
+  }
+
+  updateCartCount(); // Update UI after change
+  updateCart(); // Update UI after change
+}
+
+function getCartTotal() {
+  return cart.reduce((total, item) => {
+    return total + item.price * item.quantity; // Add up price * quantity for all items
+  }, 0);
+}
+
+function updateCart() {
+  const cartItem = document.getElementById("cartItem"); // Find the container in the DOM where cart rows are rendered
+
+  // If cart is empty, show empty message + total = 0, then stop
+  if (cart.length === 0) {
+    cartItem.innerHTML = `
+      <p class="text-gray-600">Your cart is empty.</p>
+      <div class="cart-row cart-total-row">
+        <h3>Total Cost: $0.00</h3> 
+      </div>
+    `;
+    return;
+  }
+
+  let cartMarkup = ""; // Build HTML for all cart rows
+
+  cart.forEach((item) => {
+    const itemTotal = item.price * item.quantity; // get itemTotal from price and quantity
+
+    // Append cart row markup
+    cartMarkup += `
+      <div class="cart-row">
+        <h3>${item.mealName}</h3>
+        <p>Price: $${item.price}</p>
+        <p>Quantity: ${item.quantity}</p>
+        <p><strong>Item Total: $${itemTotal.toFixed(2)}</strong></p>
+
+        <div class="cart-buttons">
+          <input type="button" value="+" onclick="changeQuantity(${item.mealId}, 1)" />
+          <input type="button" value="-" onclick="changeQuantity(${item.mealId}, -1)" />
+        </div>
+      </div>
+    `;
+  });
+
+  const cartTotal = getCartTotal(); // Calculate total cart cost
+
+  // Add a final "Total Cost" row at the bottom
+  cartMarkup += `
+    <div class="cart-row cart-total-row">
+      <h3>Total Cost: $${cartTotal.toFixed(2)}</h3> 
+    </div>
+  `;
+
+  cartItem.innerHTML = cartMarkup; // Inject cart HTML into the page
+}
+
+function changeQuantity(mealId, change) {
+  // Update quantities using map, then remove items that are 0 or negative
+  cart = cart
+    .map((item) => {
+      if (item.mealId === mealId) {
+        return { ...item, quantity: item.quantity + change }; // If this is the item then adjust quantity
+      }
+      return item; // Otherwise keep item unchanged
+    })
+    .filter((item) => item.quantity > 0); // Remove any items whose quantity is now 0 or negative
+
+  updateCartCount(); // Update UI after change
+  updateCart(); // Update UI after change
+}
+
+function checkOut() {
+  if (cart.length === 0) {
+    alert("Cart is empty. Please add items to cart before checkout."); // Prevent checkout if cart has nothing in it
+    return false;
+  }
+
+  alert("Checkout successful! Thank you for your order."); // Confirm checkout success
+
+  cart = []; //Clear cart
+  updateCartCount(); // Reset UI
+  updateCart(); // Reset UI
+  showFoodSelection(); // Reset UI
+}
+----------DASHBOARD.JS----------
+
+----------STYLE.CSS----------
+* {
+  box-sizing: border-box; /* padding and border are included inside width and height */
+}
+
+/* Base page styling */
+body {
+  font-family: Arial, sans-serif; /* Default font */
+  margin: 0; /* Removes default browser margin */
+  padding: 16px; /* Adds page padding */
+  background: #7a87a0; /* Default background color */
+  color: #1f2937; /* Default text color */
+}
+
+main {
+  max-width: 1400px; /* Prevents content from being too wide */
+  margin: 0 auto; /* Centers horizontally */
+}
+
+h2 {
+  margin: 8px 0 12px; /* Spacing above and below section headings */
+}
+
+/* Buttons (general) */
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  padding: 8px 12px; /* Button spacing */
+  border: 1px solid #a15151a1; /* Border color */
+  border-radius: 8px; /* Rounded corners */
+  background: rgba(158, 100, 23, 0.767); /* Default background */
+  cursor: pointer; /* Hand cursor on hover */
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover {
+  background: green; /* Hover state (overridden later) */
+}
+
+/* Login page background */
+.login-bg {
+  min-height: 100vh; /* Full viewport height */
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.45), rgba(10, 10, 10, 0.65)),
+    /* Dark overlay */
+    url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80"); /* Background photo */
+  background-size: cover; /* Image covers the screen */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* No tiling */
+  display: grid; /* Grid used for easy centering */
+  place-items: center; /* Center content both ways */
+  padding: 20px; /* Padding so card doesnt touch edges */
+}
+
+.login-wrapper {
+  width: 100%; /* Full width */
+  display: flex; /* Allows centering child */
+  justify-content: center; /* Center horizontally */
+}
+
+.login-card {
+  width: min(460px, 100%); /* Responsive max width */
+  background: rgba(255, 255, 255, 0.93); /* Slight transparency */
+  backdrop-filter: blur(6px); /* Blurs background behind card */
+  border: 1px solid rgba(255, 255, 255, 0.45); /* Soft border */
+  border-radius: 18px; /* Rounded corners */
+  padding: 28px; /* Inner spacing */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22); /* Depth shadow */
+}
+
+.brand-tag {
+  display: inline-block; /* So padding and border apply nicely */
+  margin: 0 0 12px; /* Space below tag */
+  padding: 6px 12px; /* Pill spacing */
+  border-radius: 999px; /* Fully rounded pill */
+  background: #fff7e6; /* Warm background */
+  border: 1px solid #e8d4a8; /* Warm border */
+  color: #7a5a21; /* Warm text */
+  font-size: 0.85rem; /* Smaller text */
+  font-weight: 700; /* Bold */
+}
+
+.login-card h1 {
+  margin: 0 0 8px; /* Space below */
+  font-size: 2rem; /* Large heading */
+  color: #111827; /* Dark text */
+}
+
+.subtitle {
+  margin: 0 0 8px; /* Space below */
+  color: #7a5a21; /* Warm accent text */
+  font-weight: 700; /* Bold */
+}
+
+.description {
+  margin: 0 0 20px; /* Space below */
+  color: #4b5563; /* Muted text */
+  line-height: 1.45; /* Readable spacing */
+}
+
+/* Login form styling */
+.login-form label {
+  display: block; /* Each label on its own line */
+  margin: 0 0 6px; /* Space below label */
+  font-size: 0.92rem; /* Slightly smaller */
+  font-weight: 600; /* Semi-bold */
+  color: #374151; /* Dark gray */
+}
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  width: 100%; /* Full width fields */
+  padding: 12px 14px; /* Field padding */
+  margin-bottom: 14px; /* Space between fields */
+  border: 1px solid #d1d5db; /* Border */
+  border-radius: 10px; /* Rounded corners */
+  background: #fff; /* White background */
+  font-size: 0.96rem; /* Field text size */
+}
+
+.login-form input[type="email"]:focus,
+.login-form input[type="password"]:focus {
+  outline: none; /* Remove default focus outline */
+  border-color: #b98a2f; /* Focus border color */
+  box-shadow: 0 0 0 4px rgba(185, 138, 47, 0.14); /* Focus glow ring */
+}
+
+.form-actions {
+  display: flex; /* Row layout for buttons */
+  gap: 10px; /* Space between buttons */
+  margin-top: 4px; /* Slight spacing above */
+}
+
+.login-form input[type="submit"],
+.login-form input[type="reset"] {
+  padding: 10px 14px; /* Button padding */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid #cfcfcf; /* Border */
+  cursor: pointer; /* Hand cursor */
+  font-weight: 600; /* Semi-bold */
+}
+
+/* Special styling for the login submit button */
+#loginBtn {
+  background: #111827; /* Dark background */
+  color: #fff; /* White text */
+  border-color: #111827; /* Matching border */
+  flex: 1; /* Makes login button take more space */
+}
+
+#loginBtn:hover {
+  background: #1f2937; /* Slightly lighter on hover */
+}
+
+/* Reset button styling */
+.login-form input[type="reset"] {
+  background: #fffaf0; /* Light warm background */
+  border-color: #e6d6b5; /* Warm border */
+  color: #6a5425; /* Warm text */
+}
+
+.login-form input[type="reset"]:hover {
+  background: #f8efd9; /* Hover background */
+}
+
+/* Dashboard background */
+.dashboard-bg {
+  min-height: 100vh; /* Full height */
+  margin: 0; /* Remove margin */
+  background-image:
+    linear-gradient(rgba(8, 8, 8, 0.5), rgba(8, 8, 8, 0.72)),
+    /* Dark overlay */
+    url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1800&q=80"); /* Background photo */
+  background-size: cover; /* Cover screen */
+  background-position: center; /* Center image */
+  background-repeat: no-repeat; /* No tiling */
+  padding: 20px; /* Spacing around content */
+}
+
+.dashboard-shell {
+  width: min(1400px, 100%); /* Responsive width */
+  margin: 0 auto; /* Center */
+  display: grid; /* Grid layout */
+  gap: 14px; /* Space between sections */
+}
+
+/* Top bar */
+.dashboard-topbar {
+  display: grid; /* Two-column layout */
+  grid-template-columns: 1.2fr 1fr; /* Left wider than right */
+  gap: 14px; /* Space between columns */
+  padding: 18px; /* Padding */
+  border-radius: 18px; /* Rounded corners */
+  background: rgba(255, 255, 255, 0.9); /* Light translucent */
+  border: 1px solid rgba(255, 255, 255, 0.42); /* Soft border */
+  backdrop-filter: blur(8px); /* Blur behind panel */
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18); /* Shadow */
+}
+
+.dashboard-brand h1 {
+  margin: 0 0 6px; /* Space below */
+  color: #111827; /* Dark heading */
+  font-size: clamp(1.35rem, 2vw, 1.8rem); /* Responsive heading size */
+}
+
+.dashboard-subtitle {
+  margin: 0; /* Remove default margin */
+  color: #5b6270; /* Muted text */
+  line-height: 1.4; /* Readable spacing */
+}
+
+.dashboard-meta {
+  display: grid; /* Stack chips */
+  gap: 10px; /* Space between chips */
+  align-content: center; /* Center chips vertically */
+}
+
+.meta-chip {
+  display: flex; /* Column layout for label and value */
+  flex-direction: column;
+  gap: 2px; /* Small gap */
+  padding: 10px 12px; /* Inner spacing */
+  border-radius: 12px; /* Rounded corners */
+  background: #fffaf0; /* Warm background */
+  border: 1px solid #e6d6b5; /* Warm border */
+  color: #2b2b2b; /* Text color */
+}
+
+.chip-label {
+  font-size: 0.78rem; /* Smaller label */
+  color: #7a5a21; /* Warm accent */
+  font-weight: 700; /* Bold */
+  text-transform: uppercase; /* Uppercase label */
+  letter-spacing: 0.04em; /* Spacing between letters */
+}
+
+#userEmail,
+#cartCount {
+  font-weight: 600; /* Bold values */
+  color: #1f2937; /* Dark gray */
+  word-break: break-word; /* Prevent overflow on long emails */
+}
+
+/* Action buttons row */
+.dashboard-actions {
+  display: flex; /* Row of buttons */
+  flex-wrap: wrap; /* Wrap to new line on small screens */
+  gap: 10px; /* Space between buttons */
+  padding: 12px; /* Padding */
+  border-radius: 16px; /* Rounded corners */
+  background: rgba(255, 255, 255, 0.88); /* Light translucent */
+  border: 1px solid rgba(255, 255, 255, 0.42); /* Soft border */
+  backdrop-filter: blur(8px); /* Blur behind panel */
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.14); /* Shadow */
+}
+
+.dashboard-actions input[type="button"] {
+  padding: 10px 14px; /* Button padding */
+  border-radius: 10px; /* Rounded */
+  border: 1px solid #d3d3d3; /* Border */
+  background: #fff; /* Default background */
+  cursor: pointer; /* Hand cursor */
+  font-weight: 600; /* Semi-bold */
+}
+
+/* Button accents (Had ChatGPT help with getting these button colors to work right) */
+.dashboard-actions input[type="button"]:nth-child(1) {
+  background: #fff7e6;
+  border-color: #e8d4a8;
+  color: #6d5120;
+}
+
+.dashboard-actions input[type="button"]:nth-child(1):hover {
+  background: #f8efd9;
+}
+
+.dashboard-actions input[type="button"]:nth-child(2) {
+  background: #f8fafc;
+  border-color: #d8dee8;
+  color: #334155;
+}
+
+.dashboard-actions input[type="button"]:nth-child(2):hover {
+  background: #eef2f7;
+}
+
+.dashboard-actions input[type="button"]:nth-child(3) {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+}
+
+.dashboard-actions input[type="button"]:nth-child(3):hover {
+  background: #1f2937;
+}
+
+.dashboard-actions input[type="button"]:nth-child(4) {
+  background: #fff;
+  border-color: #e2c7c7;
+  color: #7f1d1d;
+}
+
+.dashboard-actions input[type="button"]:nth-child(4):hover {
+  background: #fff5f5;
+}
+
+/* Main content panel */
+.dashboard-content-panel {
+  padding: 16px; /* Inner spacing */
+  border-radius: 18px; /* Rounded corners */
+  background: rgba(255, 255, 255, 0.92); /* Light translucent */
+  border: 1px solid rgba(255, 255, 255, 0.42); /* Soft border */
+  backdrop-filter: blur(8px); /* Blur behind panel */
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18); /* Shadow */
+}
+
+.section-heading {
+  margin-bottom: 8px; /* Space under heading */
+}
+
+.section-heading h2 {
+  margin: 0 0 4px; /* Space below heading */
+  color: #111827; /* Dark heading */
+  font-size: 1.2rem; /* Size */
+}
+
+.section-heading p {
+  margin: 0; /* Remove default margin */
+  color: #667085; /* Muted text */
+  font-size: 0.95rem; /* Slightly smaller */
+}
+
+/* Food grid area */
+#foodSelection {
+  margin-top: 12px; /* Space above menu grid */
+  align-items: start; /* Align items at top */
+}
+
+#foodSelection > div {
+  border: 1px solid #ede5d7; /* Card border */
+  border-radius: 14px; /* Rounded cards */
+  background: #fffefb; /* Slight warm white */
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05); /* Soft shadow */
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease; /* Smooth hover transitions */
+}
+
+#foodSelection > div:hover {
+  transform: translateY(-2px); /* Lift effect */
+  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.1); /* Deeper shadow */
+}
+
+#foodSelection img {
+  border-radius: 10px; /* Rounded images */
+  object-fit: cover; /* Crop instead of stretching */
+}
+
+#foodSelection h3 {
+  color: #1f2937; /* Text color */
+}
+
+#foodSelection p {
+  color: #5b6270; /* Muted text */
+}
+
+#foodSelection input[type="button"] {
+  width: 100%; /* Button spans full card width */
+  margin-top: 8px; /* Space above button */
+  padding: 10px 12px; /* Padding */
+  border-radius: 10px; /* Rounded */
+  border: 1px solid #111827; /* Dark border */
+  background: #111827; /* Dark background */
+  color: #fff; /* White text */
+  font-weight: 600; /* Semi-bold */
+  cursor: pointer; /* Hand cursor */
+}
+
+#foodSelection input[type="button"]:hover {
+  background: #1f2937; /* Hover background */
+}
+
+/* Cart section */
+#cartSelection {
+  display: none; /* Hidden until "View Cart" is clicked */
+  margin-top: 14px; /* Space above cart */
+  padding: 14px; /* Inner spacing */
+  border-radius: 14px; /* Rounded */
+  border: 1px solid #eadfcd; /* Border */
+  background: #fffdf8; /* Warm background */
+}
+
+#cartItem h3 {
+  margin-bottom: 4px; /* Spacing */
+}
+
+.cart-heading {
+  margin-bottom: 10px; /* Spacing */
+}
+
+#cartItem {
+  display: grid; /* Stack cart rows */
+  gap: 10px; /* Space between rows */
+}
+
+.cart-row {
+  border: 1px solid #ece3d3; /* Border */
+  border-radius: 12px; /* Rounded */
+  padding: 12px; /* Inner spacing */
+  background: #ffffff; /* White */
+}
+
+.cart-row h3 {
+  margin: 0 0 6px; /* Space under item name */
+  color: #1f2937; /* Dark text */
+}
+
+.cart-row p {
+  margin: 3px 0; /* Small spacing */
+  color: #5b6270; /* Muted text */
+}
+
+.cart-buttons {
+  display: flex; /* Row layout for + and - */
+  gap: 8px; /* Space between buttons */
+  margin-top: 8px; /* Space above */
+}
+
+.cart-buttons input[type="button"] {
+  min-width: 42px; /* Minimum size */
+  padding: 8px 10px; /* Padding */
+  border-radius: 9px; /* Rounded */
+  border: 1px solid #d8dee8; /* Border */
+  background: #f8fafc; /* Light background */
+  cursor: pointer; /* Hand cursor */
+  font-weight: 700; /* Bold */
+}
+
+.cart-buttons input[type="button"]:hover {
+  background: #eef2f7; /* Hover background */
+}
+----------STYLE.CSS----------
